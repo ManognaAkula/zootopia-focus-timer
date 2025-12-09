@@ -2,95 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka:wght@400;500;600;700&display=swap');
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Zootopia Color Palette */
+    --background: 250 45% 12%;
+    --foreground: 0 0% 98%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 250 40% 18%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 250 40% 15%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Nick's Orange */
+    --primary: 25 90% 55%;
+    --primary-foreground: 250 45% 10%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Soft Lavender (Judy vibes) */
+    --secondary: 270 35% 65%;
+    --secondary-foreground: 250 45% 10%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* City Purple */
+    --muted: 250 30% 25%;
+    --muted-foreground: 250 20% 70%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent Teal (ZPD badge) */
+    --accent: 180 60% 45%;
+    --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 250 30% 30%;
+    --input: 250 30% 25%;
+    --ring: 25 90% 55%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* Custom Zootopia tokens */
+    --zootopia-night: 250 45% 8%;
+    --zootopia-dusk: 270 40% 20%;
+    --zootopia-city-glow: 280 50% 40%;
+    --nick-orange: 25 90% 55%;
+    --nick-orange-light: 30 85% 65%;
+    --judy-lavender: 270 35% 75%;
+    --judy-gray: 250 15% 60%;
+    --carrot-orange: 20 95% 50%;
+    --zpd-gold: 45 90% 55%;
+    --zpd-blue: 210 70% 45%;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Gradients */
+    --gradient-city: linear-gradient(135deg, hsl(250 45% 12%) 0%, hsl(270 40% 18%) 50%, hsl(280 35% 22%) 100%);
+    --gradient-sunset: linear-gradient(180deg, hsl(270 40% 25%) 0%, hsl(25 60% 35%) 100%);
+    --gradient-nick: linear-gradient(135deg, hsl(25 90% 55%) 0%, hsl(30 85% 45%) 100%);
+    --gradient-judy: linear-gradient(135deg, hsl(270 35% 65%) 0%, hsl(250 30% 55%) 100%);
+    --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
 
-    --sidebar-primary: 240 5.9% 10%;
+    /* Shadows */
+    --shadow-glow-orange: 0 0 40px hsl(25 90% 55% / 0.4);
+    --shadow-glow-purple: 0 0 60px hsl(270 50% 50% / 0.3);
+    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.3);
 
+    --sidebar-background: 250 45% 10%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 25 90% 55%;
     --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 270 35% 65%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 250 30% 25%;
+    --sidebar-ring: 25 90% 55%;
   }
 }
 
@@ -100,6 +82,134 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-nunito;
+    background: var(--gradient-city);
+    min-height: 100vh;
   }
+}
+
+@layer components {
+  .glass-card {
+    @apply backdrop-blur-xl bg-card/40 border border-white/10 shadow-lg;
+    background: var(--gradient-glass);
+  }
+
+  .glow-orange {
+    box-shadow: var(--shadow-glow-orange);
+  }
+
+  .glow-purple {
+    box-shadow: var(--shadow-glow-purple);
+  }
+
+  .text-gradient-nick {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-nick);
+  }
+
+  .text-gradient-judy {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-judy);
+  }
+
+  .btn-zootopia {
+    @apply relative overflow-hidden transition-all duration-300;
+    @apply hover:scale-105 active:scale-95;
+  }
+
+  .btn-zootopia::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 100%);
+  }
+
+  .btn-zootopia:hover::before {
+    @apply opacity-100;
+  }
+}
+
+@layer utilities {
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse-slow 2s ease-in-out infinite;
+  }
+
+  .animate-wiggle {
+    animation: wiggle 2s ease-in-out infinite;
+  }
+
+  .animate-bounce-slow {
+    animation: bounce-slow 2s ease-in-out infinite;
+  }
+
+  .animate-ear-twitch {
+    animation: ear-twitch 4s ease-in-out infinite;
+  }
+
+  .animate-tail-swish {
+    animation: tail-swish 3s ease-in-out infinite;
+  }
+
+  .animate-progress-ring {
+    animation: progress-ring 0.5s ease-out forwards;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes ear-twitch {
+  0%, 90%, 100% { transform: rotate(0deg); }
+  92%, 96% { transform: rotate(5deg); }
+  94%, 98% { transform: rotate(-3deg); }
+}
+
+@keyframes tail-swish {
+  0%, 100% { transform: rotate(-5deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+
+@keyframes progress-ring {
+  from { stroke-dashoffset: 283; }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.8);
 }
