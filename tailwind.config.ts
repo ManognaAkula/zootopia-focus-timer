@@ -13,6 +13,10 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        nunito: ['Nunito', 'sans-serif'],
+        fredoka: ['Fredoka', 'sans-serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -57,6 +61,25 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Zootopia custom colors
+        zootopia: {
+          night: "hsl(var(--zootopia-night))",
+          dusk: "hsl(var(--zootopia-dusk))",
+          glow: "hsl(var(--zootopia-city-glow))",
+        },
+        nick: {
+          orange: "hsl(var(--nick-orange))",
+          light: "hsl(var(--nick-orange-light))",
+        },
+        judy: {
+          lavender: "hsl(var(--judy-lavender))",
+          gray: "hsl(var(--judy-gray))",
+        },
+        carrot: "hsl(var(--carrot-orange))",
+        zpd: {
+          gold: "hsl(var(--zpd-gold))",
+          blue: "hsl(var(--zpd-blue))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -65,25 +88,41 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        "fade-in": {
+          from: { opacity: "0", transform: "translateY(10px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "scale-in": {
+          from: { opacity: "0", transform: "scale(0.95)" },
+          to: { opacity: "1", transform: "scale(1)" },
+        },
+        "slide-up": {
+          from: { opacity: "0", transform: "translateY(20px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        shimmer: {
+          from: { backgroundPosition: "-200% 0" },
+          to: { backgroundPosition: "200% 0" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-in": "fade-in 0.4s ease-out",
+        "scale-in": "scale-in 0.3s ease-out",
+        "slide-up": "slide-up 0.5s ease-out",
+        shimmer: "shimmer 2s linear infinite",
+      },
+      backgroundImage: {
+        'city-gradient': 'linear-gradient(135deg, hsl(250 45% 12%) 0%, hsl(270 40% 18%) 50%, hsl(280 35% 22%) 100%)',
+        'glass-gradient': 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
       },
     },
   },
