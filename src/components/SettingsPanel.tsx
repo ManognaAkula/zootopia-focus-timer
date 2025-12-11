@@ -2,14 +2,25 @@ import { useState } from 'react';
 import { Settings, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { TimerSettings } from '@/hooks/usePomodoroTimer';
+import { SoundSettings } from '@/hooks/useSoundSettings';
 import { Slider } from '@/components/ui/slider';
+import SoundSettingsPanel from './SoundSettingsPanel';
 
 interface SettingsPanelProps {
   settings: TimerSettings;
+  soundSettings: SoundSettings;
   onUpdateSettings: (settings: Partial<TimerSettings>) => void;
+  onUpdateSoundSettings: (settings: Partial<SoundSettings>) => void;
+  onToggleAmbient: (enabled: boolean) => void;
 }
 
-const SettingsPanel = ({ settings, onUpdateSettings }: SettingsPanelProps) => {
+const SettingsPanel = ({ 
+  settings, 
+  soundSettings,
+  onUpdateSettings, 
+  onUpdateSoundSettings,
+  onToggleAmbient,
+}: SettingsPanelProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const formatMinutes = (seconds: number) => Math.round(seconds / 60);
@@ -28,16 +39,14 @@ const SettingsPanel = ({ settings, onUpdateSettings }: SettingsPanelProps) => {
 
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          {/* Backdrop */}
           <div 
             className="absolute inset-0 bg-background/80 backdrop-blur-sm"
             onClick={() => setIsOpen(false)}
           />
 
-          {/* Panel */}
-          <div className="relative w-full max-w-md glass-card rounded-2xl p-6 animate-scale-in">
+          <div className="relative w-full max-w-md glass-card rounded-2xl p-6 animate-scale-in max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-fredoka font-bold text-foreground">Timer Settings</h2>
+              <h2 className="text-xl font-fredoka font-bold text-foreground">Settings</h2>
               <Button
                 variant="ghost"
                 size="icon"
@@ -112,6 +121,13 @@ const SettingsPanel = ({ settings, onUpdateSettings }: SettingsPanelProps) => {
                   className="cursor-pointer"
                 />
               </div>
+
+              {/* Sound Settings */}
+              <SoundSettingsPanel
+                settings={soundSettings}
+                onUpdateSettings={onUpdateSoundSettings}
+                onToggleAmbient={onToggleAmbient}
+              />
             </div>
 
             <p className="mt-6 text-xs text-center text-muted-foreground font-nunito">
