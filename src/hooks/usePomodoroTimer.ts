@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 export type SessionType = 'work' | 'shortBreak' | 'longBreak';
 
@@ -25,9 +25,12 @@ const DEFAULT_SETTINGS: TimerSettings = {
   longBreakInterval: 4,
 };
 
-export const usePomodoroTimer = (initialSettings: Partial<TimerSettings> = {}) => {
+export const usePomodoroTimer = (
+  initialSettings: Partial<TimerSettings> = {},
+  onPomodoroComplete?: (focusMinutes: number) => void,
+  onSessionEnd?: () => void,
+) => {
   const settings = { ...DEFAULT_SETTINGS, ...initialSettings };
-  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const [state, setState] = useState<TimerState>({
     timeRemaining: settings.workDuration,
@@ -39,18 +42,6 @@ export const usePomodoroTimer = (initialSettings: Partial<TimerSettings> = {}) =
   });
 
   const [timerSettings, setTimerSettings] = useState<TimerSettings>(settings);
-
-  // Create audio context for notification
-  useEffect(() => {
-    audioRef.current = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2teleVFIU6S8rH9nWGZ2k6msi25maHWMo6qjjn1ze4qaoaGUhoGEjZWVnJuSjY2PkJOVlZOSkJCQkJGSkZKRkJCRkJGRkZGQkJGQkJCRkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Pj4+Oj4+Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6Ojo6OjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIuLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uKioqKioqKioqKioqKioqKioqKioqKioqKioqKiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHhoaGhoaGhoaGhoaGhoaGhoaGhoaGhoaGhoaGhoWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWEhISEhISEhISEhISEhISEhISEhISEhISEhISEg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4KCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgYGBgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAf39/f39/f39/f39/f39/f39/f39/f39/f39/f35+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn59fX19fX19fX19fX19fX19fX19fX19fX19fX19fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHt7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7e3t7enp6enp6enp6enp6enp6enp6enp6enp6enp6enl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHd3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHNzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3NzcnJycnJycnJycnJycnJycnJycnJycnJycnJycnFxcXFxcXFxcXFxcXFxcXFxcXFxcXFxcXFxcXFxcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBvb29vb29vb29vb29vb29vb29vb29vb29vb29ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubm5ubW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1tbW1sbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsa2tra2tra2tra2tra2tra2tra2tra2tra2tra2traWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaWlpaGhoaGhoaGhoaGhoaGhoaGhoaGhoaGhoaGhoaGhoZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGNjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJiYmJhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWA=');
-  }, []);
-
-  const playNotification = useCallback(() => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = 0;
-      audioRef.current.play().catch(() => {});
-    }
-  }, []);
 
   const getSessionDuration = useCallback((type: SessionType) => {
     switch (type) {
@@ -105,15 +96,17 @@ export const usePomodoroTimer = (initialSettings: Partial<TimerSettings> = {}) =
     const interval = setInterval(() => {
       setState(prev => {
         if (prev.timeRemaining <= 1) {
-          playNotification();
+          onSessionEnd?.();
           
           // Session completed
           if (prev.sessionType === 'work') {
+            const focusMinutes = Math.round(timerSettings.workDuration / 60);
+            onPomodoroComplete?.(focusMinutes);
+            
             const newCompleted = prev.completedPomodoros + 1;
             const sessionsUntilLong = prev.sessionsUntilLongBreak - 1;
             
             if (sessionsUntilLong === 0) {
-              // Time for long break
               const duration = timerSettings.longBreakDuration;
               return {
                 ...prev,
@@ -125,7 +118,6 @@ export const usePomodoroTimer = (initialSettings: Partial<TimerSettings> = {}) =
                 sessionsUntilLongBreak: timerSettings.longBreakInterval,
               };
             } else {
-              // Time for short break
               const duration = timerSettings.shortBreakDuration;
               return {
                 ...prev,
@@ -138,7 +130,6 @@ export const usePomodoroTimer = (initialSettings: Partial<TimerSettings> = {}) =
               };
             }
           } else {
-            // Break completed, back to work
             const duration = timerSettings.workDuration;
             return {
               ...prev,
@@ -155,7 +146,7 @@ export const usePomodoroTimer = (initialSettings: Partial<TimerSettings> = {}) =
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [state.isRunning, timerSettings, playNotification]);
+  }, [state.isRunning, timerSettings, onPomodoroComplete, onSessionEnd]);
 
   // Update timer when settings change
   useEffect(() => {

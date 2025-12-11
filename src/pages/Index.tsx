@@ -1,14 +1,20 @@
 import { usePomodoroTimer } from '@/hooks/usePomodoroTimer';
+import { useStatistics } from '@/hooks/useStatistics';
+import { useSoundSettings } from '@/hooks/useSoundSettings';
 import TimerDisplay from '@/components/TimerDisplay';
 import TimerControls from '@/components/TimerControls';
 import SessionSelector from '@/components/SessionSelector';
 import PomodoroCounter from '@/components/PomodoroCounter';
 import CharacterDisplay from '@/components/CharacterDisplay';
 import SettingsPanel from '@/components/SettingsPanel';
+import StatisticsPanel from '@/components/StatisticsPanel';
 import ZootopiaBackground from '@/components/ZootopiaBackground';
 import ZPDBadge from '@/components/ZPDBadge';
 
 const Index = () => {
+  const { stats, recordPomodoro, getWeeklyData, resetStats } = useStatistics();
+  const { settings: soundSettings, playNotification, toggleAmbient, updateSettings: updateSoundSettings } = useSoundSettings();
+
   const {
     timeRemaining,
     progress,
@@ -21,12 +27,27 @@ const Index = () => {
     resetTimer,
     switchSession,
     updateSettings,
-  } = usePomodoroTimer();
+  } = usePomodoroTimer(
+    {},
+    recordPomodoro,
+    playNotification,
+  );
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
       <ZootopiaBackground />
-      <SettingsPanel settings={settings} onUpdateSettings={updateSettings} />
+      <StatisticsPanel 
+        stats={stats} 
+        weeklyData={getWeeklyData()} 
+        onReset={resetStats} 
+      />
+      <SettingsPanel 
+        settings={settings} 
+        soundSettings={soundSettings}
+        onUpdateSettings={updateSettings} 
+        onUpdateSoundSettings={updateSoundSettings}
+        onToggleAmbient={toggleAmbient}
+      />
 
       {/* Main content */}
       <div className="w-full max-w-4xl mx-auto flex flex-col items-center gap-6 md:gap-8 animate-fade-in">
